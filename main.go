@@ -2,22 +2,25 @@ package main
 
 import (
 	"fmt"
+	"studying/generator"
+	"studying/input"
+	"studying/output"
 )
 
 func main() {
-	input := NewCLIInputReceiver()
+	input := input.NewCLIInputReceiver()
 
-	min, max, len, err := input.Receive()
+	min, max, len, filename, err := input.Receive()
 
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
 	}
 
-	gen := NewRandomNumbersGenerator(min, max, len)
+	gen := generator.NewRandomNumbersGenerator(min, max, len)
 	nums := gen.GenerateRandomNumbers()
 
-	err = SaveToFile("output.txt", nums)
+	err = output.SaveToFile(filename, nums)
 
 	if err != nil {
 		fmt.Println("Error:", err)
@@ -25,5 +28,5 @@ func main() {
 	}
 
 	fmt.Println("Generated numbers:", nums)
-	fmt.Println("Numbers saved to output.txt")
+	fmt.Println("Numbers saved to", filename)
 }
